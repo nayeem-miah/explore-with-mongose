@@ -8,8 +8,15 @@ const app = express();
 app.use(express.json())
 
 // database connect with mongoose
-mongoose.connect()
+const uri = "mongodb://localhost:27017";
+// const uri = "mongodb://localhost/test";
+mongoose.connect(uri,
+    // { useNewUrlParser: true, useUnifiedTopology: true }
+)
+    .then(() => console.log("Database connected"))
+    .catch(err=> console.log(err))
 // application routes
+
 
 
 //  default error handler
