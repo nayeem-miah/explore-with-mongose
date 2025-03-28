@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const todoHandler = require('./routeHandler/todoHandler')
 
 
 
@@ -14,8 +15,11 @@ mongoose.connect(uri,
     // { useNewUrlParser: true, useUnifiedTopology: true }
 )
     .then(() => console.log("Database connected"))
-    .catch(err=> console.log(err))
+    .catch(err => console.log(err))
+    
+
 // application routes
+    app.use("/todo", )
 
 
 
