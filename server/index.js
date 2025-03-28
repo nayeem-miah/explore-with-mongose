@@ -19,7 +19,7 @@ mongoose.connect(uri,
     
 
 // application routes
-    app.use("/todo", )
+    // app.use("/todo", )
 
 
 

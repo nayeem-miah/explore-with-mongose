@@ -15,3 +15,6 @@ const todosSchema = mongoose.Schema({
         default : Date.now()
     }
 })
+
+
+module.exports = todosSchema;
