@@ -5,7 +5,9 @@ const todosSchema = mongoose.Schema({
         type: String, 
         required: true,
     }, 
-    description: String,
+    description: {
+        type : String
+    },
     status: {
         type: String,
         enum : ["active", "inactive"],

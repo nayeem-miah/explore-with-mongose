@@ -17,7 +17,15 @@ router.get('/:id', async (req, res) => {
 
 // POST TODO
 router.post("/all", async (req, res) => {
-    
+    const newTodo = new Todo(req.body)
+    await newTodo.save((err) => {
+        if (err) {
+            res.status(500).json({ error: `there was a server site error ${err}` })
+        } else {
+            res.status(200).json({ message: "Todo created successfully" })
+        }
+    }
+    )
 })
 
 // put todo
