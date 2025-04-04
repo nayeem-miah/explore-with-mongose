@@ -6,8 +6,16 @@ const todosSchema = require('../schmas/todoSchmas');
 const Todo = new mongoose.model("Todo", todosSchema);
 // get all todo
 router.get('/', async (req, res) => {
+  try {
     const result = await Todo.find();
     console.log(result);
+    res.send(result).status(200)
+  } catch (err) {
+      console.error(err)
+      res.status(500).json({
+          message : "there was a server site error!"
+      })
+  }
 })
 
 // get a todo
