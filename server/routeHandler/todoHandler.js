@@ -8,8 +8,8 @@ const Todo = new mongoose.model("Todo", todosSchema);
 router.get('/', async (req, res) => {
   try {
     const result = await Todo.find();
-    console.log(result);
-    res.send(result).status(200)
+    // console.log(result);
+    res.send(result)
   } catch (err) {
       console.error(err)
       res.status(500).json({
