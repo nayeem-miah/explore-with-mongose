@@ -5,12 +5,10 @@ const todosSchema = mongoose.Schema({
         type: String, 
         required: true,
     }, 
-    description: {
-        type : String
-    },
+    description: String,
     status: {
         type: String,
-        enum : ["active", "inactive"],
+        enum : ['active', 'inactive'],
     },
     date: {
         type: Date,
