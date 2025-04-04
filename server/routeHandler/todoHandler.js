@@ -16,25 +16,22 @@ router.get('/:id', async (req, res) => {
 router.post('/all', async (req, res) => {
 })
 
-// post a todo in db
 router.post('/', async (req, res) => {
-    const newDate = new Todo(req.body);
-    const result = await newDate.save(
-        (err) => {
-            if (err) {
-                res.status(500).json({
-                    error: "there was a server site error!"
-                });
-            } else {
-                res.status(200).json({
-                    message: "data was inserted success"
-                });
-            }
-        }
-    );
-    console.log(result, "result is ");
-    res.send(result)
-})
+    try {
+        const newDate = new Todo(req.body);
+        const result = await newDate.save();
+        res.status(200).json({
+            message: "Data was inserted successfully",
+            result: result
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "There was a server-side error!"
+        });
+    }
+});
+
 
 // updated a todo
 router.put('/:id', async (req, res) => {
