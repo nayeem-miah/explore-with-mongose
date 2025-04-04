@@ -4,19 +4,16 @@ const todoHandler = require('./routeHandler/todoHandler')
 const port = 5000;
 
 
-
 // express with init
 const app = express();
 app.use(express.json())
+
 
 // database connect with mongoose
 const uri = "mongodb://localhost:27017/todos";
 mongoose.connect(uri)
     .then(()=>console.log("database connect"))
     .catch(err=> console.log(err))
-
-
-
 
 
 // application routes
