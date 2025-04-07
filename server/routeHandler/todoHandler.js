@@ -112,23 +112,23 @@ router.put('/:id', async (req, res) => {
 })
 
 // delete a todo
-// router.delete('/:id', async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const filter = {_id : id}
-//     const result = await Todo.deleteOne(filter)
-//     console.log(result);
-//     res.status(200).json({
-//       message: "delete success",
-//       result: result
-//     }
-//     )
+router.delete('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const filter = {_id : id}
+    const result = await Todo.deleteOne(filter)
+    console.log(result);
+    res.status(200).json({
+      message: "delete success",
+      result: result
+    }
+    )
     
-//   } catch (error) {
-//     console.error(error)
-//     res.status(500).json({message : "there was server site error"})
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({message : "there was server site error"})
     
-//   }
-// })
+  }
+})
 
 module.exports = router;
