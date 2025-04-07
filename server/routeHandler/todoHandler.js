@@ -7,9 +7,17 @@ const Todo = new mongoose.model("Todo", todosSchema);
 // get all todo
 router.get('/', async (req, res) => {
   try {
-    const result = await Todo.find();
+    const filter = { status: "inactive" }; //filter by status
+    // select, limit and sort() use
+    const result = await Todo.find(filter).select({
+      _id : 0
+    }).limit(3).sort({date : -1});
     // console.log(result);
-    res.send(result)
+    // res.send(result);
+    res.status(200).json({
+      message: "get all toto success",
+      result : result
+    })
   } catch (err) {
       console.error(err)
       res.status(500).json({
@@ -20,6 +28,14 @@ router.get('/', async (req, res) => {
 
 // get a todo
 router.get('/:id', async (req, res) => {
+  try {
+    
+  } catch (err) {
+      console.error(err)
+      res.status(500).json({
+          message : "there was a server site error!"
+      })
+  }
 })
 
 // post many todos in db 
@@ -72,7 +88,10 @@ router.put('/:id', async (req, res) => {
     $set: {
       status: "active"
     }
-  }, { userFindAndModify: false })
+  }, {
+    new : true, // updated data parwer jonno
+    userFindAndModify: false
+  })
     // updateOne() --------> find and update
   // const result = await Todo.updateOne(filter, updateDocument)
   console.log(result);
