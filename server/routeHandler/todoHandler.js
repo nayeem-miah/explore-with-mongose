@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 })
 
-// post many todo in db 
+// post many todos in db 
 router.post('/all', async (req, res) => {
   try {
     const allData = req.body;
@@ -39,6 +39,7 @@ router.post('/all', async (req, res) => {
   }
 })
 
+// post a todo
 router.post('/', async (req, res) => {
     try {
         const newDate = new Todo(req.body);
@@ -58,6 +59,29 @@ router.post('/', async (req, res) => {
 
 // updated a todo
 router.put('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const filter = { _id: id };
+    const updateDocument = {
+      $set :{
+        status : "active"
+    }
+  } 
+  // const result = await Todo.updateOne({ _id: req.params.id }, {
+  //   $set: {
+  //     status: "active"
+  //   }
+  // })
+  const result = await Todo.updateOne(filter, updateDocument)
+  console.log(result);
+  res.send({
+    message: "update success",
+    result : result
+  })
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: "there was a server site error"})
+  }
 })
 
 // delete a todo
