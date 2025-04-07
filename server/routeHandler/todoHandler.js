@@ -66,13 +66,15 @@ router.put('/:id', async (req, res) => {
       $set :{
         status : "active"
     }
-  } 
-  // const result = await Todo.updateOne({ _id: req.params.id }, {
-  //   $set: {
-  //     status: "active"
-  //   }
-  // })
-  const result = await Todo.updateOne(filter, updateDocument)
+    } 
+    // findByIdAndUpdate() -------> find one and update after data
+  const result = await Todo.findByIdAndUpdate({ _id: req.params.id }, {
+    $set: {
+      status: "active"
+    }
+  }, { userFindAndModify: false })
+    // updateOne() --------> find and update
+  // const result = await Todo.updateOne(filter, updateDocument)
   console.log(result);
   res.send({
     message: "update success",
@@ -85,7 +87,23 @@ router.put('/:id', async (req, res) => {
 })
 
 // delete a todo
-router.delete('/:id', async (req, res) => {
-})
+// router.delete('/:id', async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const filter = {_id : id}
+//     const result = await Todo.deleteOne(filter)
+//     console.log(result);
+//     res.status(200).json({
+//       message: "delete success",
+//       result: result
+//     }
+//     )
+    
+//   } catch (error) {
+//     console.error(error)
+//     res.status(500).json({message : "there was server site error"})
+    
+//   }
+// })
 
 module.exports = router;
