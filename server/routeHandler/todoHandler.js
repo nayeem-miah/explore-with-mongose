@@ -29,6 +29,12 @@ router.get('/', async (req, res) => {
 // get a todo
 router.get('/:id', async (req, res) => {
   try {
+    const id = req.params.id;
+    const filter ={_id : id}
+    const result = await Todo.findOne(filter)
+    res.status(200).json({
+      result : result
+    })
     
   } catch (err) {
       console.error(err)
