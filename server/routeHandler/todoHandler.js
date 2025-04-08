@@ -26,6 +26,19 @@ router.get('/', async (req, res) => {
   }
 })
 
+// get active todos
+router.get("/active", async (req, res) => {
+    try {
+      const todo = new Todo();
+      const result = await todo.findActive();
+      res.status(200).json({
+        result : result
+      })
+    } catch (error) {
+      console.error(error)
+    }
+})
+
 // get a todo
 router.get('/:id', async (req, res) => {
   try {

@@ -16,6 +16,11 @@ const todosSchema = mongoose.Schema({
         default : Date.now()
     }
 })
+todosSchema.methods = {
+    findActive: function () {
+        return mongoose.model("Todo").find({ status: "active" });
+    }
+}
 
 
 module.exports = todosSchema;
