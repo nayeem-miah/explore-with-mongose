@@ -39,6 +39,17 @@ router.get("/active", async (req, res) => {
     }
 })
 
+// get find all using with callback
+// ❌ Old way (invalid in Mongoose v7+)
+router.get('/callback-all', (req, res) => {
+  const todo = new Todo();
+  todo.findACallback((err, result) => {
+    res.status(200).json({
+      result : result
+    })
+  })
+})
+
 // get a todo
 router.get('/:id', async (req, res) => {
   try {
@@ -56,6 +67,8 @@ router.get('/:id', async (req, res) => {
       })
   }
 })
+
+
 
 // post many todos in db 
 router.post('/all', async (req, res) => {
