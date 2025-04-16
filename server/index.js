@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const todoHandler = require('./routeHandler/todoHandler')
+const todoHandler = require('./routeHandler/todoHandler');
+const userHandler = require("./routeHandler/userHandler")
 const port = 5000;
 
 
@@ -17,7 +18,11 @@ mongoose.connect(uri)
 
 
 // application routes
-    app.use("/todo",todoHandler)
+// todo router
+app.use("/todo", todoHandler);
+// users route
+app.use("/user", userHandler);
+    
 
 
 //  default error handler
