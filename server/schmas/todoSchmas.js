@@ -34,6 +34,12 @@ todosSchema.statics = {
     }
 }
  
+// query helpers
+todosSchema.query = {
+    byLanguage: function (language) { // ()=> {} ❌ not using arrow function because this method could't found 
+        return this.find({title : new RegExp(language, "i")})  //new RegExp()
+    }
+}
 
 
 module.exports = todosSchema;

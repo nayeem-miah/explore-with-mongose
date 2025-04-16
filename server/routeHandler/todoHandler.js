@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-// get active todos with custom method
+// get active todos with instance method
 router.get("/active", async (req, res) => {
     try {
       const todo = new Todo();
@@ -64,6 +64,16 @@ router.get("/js-data", async (req, res) => {
     }
 })
 
+// query helpers
+router.get('/language/:qu', async (req, res) => {
+  const qu = req.params.qu;
+  // const query = req.body;
+  // console.log(query, "query", qu);
+  const result = await Todo.find().byLanguage(qu);
+  res.status(200).json({
+    data : result
+  })
+})
 
 // get a todo
 router.get('/:id', async (req, res) => {
