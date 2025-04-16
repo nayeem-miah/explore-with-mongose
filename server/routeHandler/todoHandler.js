@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-// get active todos
+// get active todos with custom method
 router.get("/active", async (req, res) => {
     try {
       const todo = new Todo();
@@ -50,6 +50,21 @@ router.get('/callback-all', (req, res) => {
   })
 })
 
+// statics method
+router.get("/js-data", async (req, res) => {
+  try {
+    const result = await Todo.findByJS();
+    console.log(result);
+    res.status(200).json({
+      data : result
+    })
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({message : "there is server side error"})
+    }
+})
+
+
 // get a todo
 router.get('/:id', async (req, res) => {
   try {
@@ -67,7 +82,6 @@ router.get('/:id', async (req, res) => {
       })
   }
 })
-
 
 
 // post many todos in db 
