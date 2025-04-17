@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv")
 const todoHandler = require('./routeHandler/todoHandler');
 const userHandler = require("./routeHandler/userHandler")
 const port = 5000;
@@ -7,8 +8,8 @@ const port = 5000;
 
 // express with init
 const app = express();
+dotenv.config();
 app.use(express.json())
-
 
 // database connect with mongoose
 const uri = "mongodb://localhost:27017/todos";

@@ -1,10 +1,11 @@
 const express = require("express")
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const userSchema = require("../schmas/userSchma");
 const router = express.Router();
 const User =new mongoose.model("user", userSchema)
-
+const JSON_SECRET_TOKEN = "sfgdgndjkflgriotengdfmkgjtr";
 // sign up
 router.post("/signup", async (req, res) => {
     try {
@@ -29,6 +30,35 @@ router.post("/signup", async (req, res) => {
    }
 })
 
+//  login 
+router.post('/login', async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            res.status(401).json({message: "Authentication failed"})
+        } else {
+            console.log(user.password);
+            const validPassword =await bcrypt.compare(req.body.password, user.password);
+            if (validPassword) {
+                // generate token
+                const token = jwt.sign({
+                    email: user.email,
+                    userID : user._id
+                }, JSON_SECRET_TOKEN, {
+                    expiresIn : "1h"
+                }
+                )
+                res.status(200).json({user})
+            } else {
+                res.status(401).json({message: "Authentication failed"})
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message : "login in failed"})
+    }
+})
+
 
 // export
-module.exports = router
+module.exports = router;
