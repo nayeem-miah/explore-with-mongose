@@ -27,13 +27,13 @@ app.use("/user", userHandler);
 
 
 //  default error handler
-function errorHandler(err, req, res, next) {
+const errorHandler=(err, req, res, next) =>{
     if (res.headersSent) {
         return next(err)
     }
     res.status(500).json({error: err})
 }
-
+app.use(errorHandler)
 
 app.get("/", async (req, res) => {
     res.send("server is running......")

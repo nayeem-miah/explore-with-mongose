@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken")
 const userSchema = require("../schmas/userSchma");
 const router = express.Router();
 const User =new mongoose.model("user", userSchema)
-const JSON_SECRET_TOKEN = "sfgdgndjkflgriotengdfmkgjtr";
+// const JSON_SECRET_TOKEN = "sfgdgndjkflgriotengdfmkgjtr";
 // sign up
 router.post("/signup", async (req, res) => {
     try {
@@ -30,6 +30,8 @@ router.post("/signup", async (req, res) => {
    }
 })
 
+// console.log(process.env.JSON_SECRET_TOKEN);
+
 //  login 
 router.post('/login', async (req, res) => {
     try {
@@ -37,18 +39,22 @@ router.post('/login', async (req, res) => {
         if (!user) {
             res.status(401).json({message: "Authentication failed"})
         } else {
-            console.log(user.password);
+            // console.log(req.body.password, "user passwoed");
             const validPassword =await bcrypt.compare(req.body.password, user.password);
             if (validPassword) {
                 // generate token
                 const token = jwt.sign({
                     email: user.email,
                     userID : user._id
-                }, JSON_SECRET_TOKEN, {
+                }, process.env.JSON_SECRET_TOKEN, {
                     expiresIn : "1h"
                 }
                 )
-                res.status(200).json({user})
+                res.status(200).json({
+                    "access-token": token,
+                    message: "login success", 
+                    user: user
+                })
             } else {
                 res.status(401).json({message: "Authentication failed"})
             }

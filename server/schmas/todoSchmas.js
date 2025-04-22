@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 // creating schema
-const todosSchema = mongoose.Schema({
+const todosSchema =new mongoose.Schema({
     title: {
         type: String, 
         required: true,

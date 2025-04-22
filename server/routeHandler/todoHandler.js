@@ -2,10 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const todosSchema = require('../schmas/todoSchmas');
+const verifyLogin = require("../middlewares/verifyLogin");
 // creating todo collection
 const Todo = new mongoose.model("Todo", todosSchema);
 // get all todo
-router.get('/', async (req, res) => {
+router.get('/', verifyLogin, async (req, res) => {
+  // console.log(req.email, req.userID);
   try {
     const filter = { status: "inactive" }; //filter by status
     // select, limit and sort() use
@@ -114,7 +116,8 @@ router.post('/all', async (req, res) => {
 // post a todo
 router.post('/', async (req, res) => {
     try {
-        const newDate = new Todo(req.body);
+      const newDate = new Todo(req.body);
+      // console.log(newDate);
         const result = await newDate.save();
         res.status(200).json({
             message: "Data was inserted successfully",
