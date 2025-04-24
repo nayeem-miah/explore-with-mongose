@@ -76,7 +76,24 @@ router.get("/all-users", async (req, res) => {
         res.status(500).json({
             message: "user can't find"
         })
-        
+    }
+})
+
+// get users relational with todos
+router.get("/all", async (req, res) => {
+    try {
+        const result = await User.find({
+            status: "active"
+        }).populate("todos");
+        console.log(result);
+        res.status(200).json({
+            data :result
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "user can't find"
+        })
     }
 })
 
