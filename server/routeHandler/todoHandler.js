@@ -135,7 +135,6 @@ router.post('/',verifyLogin, async(req, res) => {
         $push: {
           todos : result._id
         }
-
       }
       )
         res.status(200).json({
