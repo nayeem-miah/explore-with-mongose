@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 // creating schema
-const todosSchema =new mongoose.Schema({
+const todosSchema = mongoose.Schema({
     title: {
         type: String, 
         required: true,
@@ -14,6 +14,10 @@ const todosSchema =new mongoose.Schema({
     date: {
         type: Date,
         default : Date.now()
+    }, 
+    user: {
+        type: mongoose.Types.ObjectId,
+        ref : "User" 
     }
 })
 // instance method

@@ -3,17 +3,24 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const todosSchema = require('../schmas/todoSchmas');
 const verifyLogin = require("../middlewares/verifyLogin");
+const userSchema = require("../schmas/userSchma");
+// creating users model
+const User = new mongoose.model("user", userSchema);
 // creating todo collection
 const Todo = new mongoose.model("Todo", todosSchema);
 // get all todo
 router.get('/', verifyLogin, async (req, res) => {
   // console.log(req.email, req.userID);
   try {
-    const filter = { status: "inactive" }; //filter by status
+    // const filter = { status: "inactive" }; //filter by status
+    const filter = {}
     // select, limit and sort() use
-    const result = await Todo.find(filter).select({
+    const result = await Todo.find({})
+      .populate("user", "name  email -_id")  // just show user and email -----> -_id remove 
+      .select({
       _id : 0
-    }).limit(3).sort({date : -1});
+      }).limit(3)
+      .sort({ date: -1 });
     // console.log(result);
     // res.send(result);
     res.status(200).json({
@@ -114,11 +121,23 @@ router.post('/all', async (req, res) => {
 })
 
 // post a todo
-router.post('/', async (req, res) => {
+router.post('/',verifyLogin, async(req, res) => {
     try {
-      const newDate = new Todo(req.body);
+      const newDate = new Todo({
+        ...req.body,
+        user: req.userID,
+      });
       // console.log(newDate);
-        const result = await newDate.save();
+      const result = await newDate.save();
+      await User.updateOne({
+        _id : req.userID
+      }, {
+        $push: {
+          todos : result._id
+        }
+
+      }
+      )
         res.status(200).json({
             message: "Data was inserted successfully",
             result: result
