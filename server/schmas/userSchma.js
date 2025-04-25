@@ -21,9 +21,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum : ["active", "isActive"]
     },
-    todos: {
-        type: mongoose.Types.ObjectId,
-        ref: "Todo"
-    }
+    todos: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "Todo"
+        }
+    ]
 })
 module.exports = userSchema;
